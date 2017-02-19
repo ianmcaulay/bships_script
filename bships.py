@@ -17,6 +17,7 @@ def start_checking_num_players():
 		num_players = pull_number()
 		if num_players >= alert_threshold:
 			# alert here
+		time.sleep(10)
 
 
 
