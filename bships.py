@@ -13,9 +13,9 @@ def pull_number():
 
 
 def start_checking_num_players():
-	alert_threshold = 4
+	alert_threshold = 8
 	refresh_time = 5
-	while 1:
+	while True:
 		num_players = pull_number()
 		print("Current Number of Players: " + str(num_players))
 		if num_players >= alert_threshold:
