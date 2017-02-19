@@ -1,5 +1,6 @@
 import urllib.request
 import time
+import winsound
 
 def pull_number():
 	url = "http://makemehost.com/games.php"
@@ -13,11 +14,17 @@ def pull_number():
 
 def start_checking_num_players():
 	alert_threshold = 7
+	refresh_time = 5
 	while 1:
 		num_players = pull_number()
+		print("Current Number of Players: " + str(num_players))
 		if num_players >= alert_threshold:
-			# alert here
-		time.sleep(10)
+			
+			winsound.PlaySound('bships_alert.wav', winsound.SND_FILENAME)
+			print("Game starting soon")
+			break
+		time.sleep(refresh_time)
+
 
 
 
