@@ -13,7 +13,7 @@ def pull_number():
 
 
 def start_checking_num_players():
-	alert_threshold = 7
+	alert_threshold = 4
 	refresh_time = 5
 	while 1:
 		num_players = pull_number()
@@ -24,6 +24,8 @@ def start_checking_num_players():
 			print("Game starting soon")
 			break
 		time.sleep(refresh_time)
+
+start_checking_num_players()
 
 
 
