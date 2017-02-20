@@ -53,7 +53,8 @@ def start_checking_num_players():
 				
 				if game.curr_players >= game.alert_threshold:
 					winsound.PlaySound('bships_alert.wav', winsound.SND_FILENAME)
-					break
+					print(output_string)
+					return
 			print(output_string)
 		time.sleep(refresh_time)
 
@@ -72,7 +73,9 @@ def start_checking_num_players():
 def generate_games():
 	battleships = Game("Battleships", "Battleships Pro", 8)
 	jurassic_park = Game("Jurassic Park", "Jurassic Park Survival!", 7, alert_threshold=5)
-	return [battleships, jurassic_park]
+	troll_and_elves = Game("Troll and Elves", "Troll and Elves", 11)
+	civ_wars = Game("Civilization Wars", "Civilization Wars", 6)
+	return [battleships, jurassic_park, troll_and_elves,civ_wars]
 
 def is_update_needed(games):
 	for game in games:
