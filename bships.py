@@ -3,6 +3,9 @@ import time
 import winsound
 import os
 
+# Number of seconds to sleep between checking website.
+REFRESH_TIME = 1
+
 class Game:
 
 	def __init__(self, name, search_string, max_players, alert_threshold=-1):
@@ -15,38 +18,27 @@ class Game:
 		self.curr_players = -1
 		self.prev_players = -1
 
+		
 def pull_number(games):
 	url = "http://makemehost.com/games.php"
-	#url = "https://entgaming.net/forum/games.php"
-	#req = urllib.request.Request(url, headers={'User-Agent' : "Magic Browser"})
-	#content = str(urllib.request.urlopen(url, headers={'User-Agent' : "Magic Browser"}).read())
 	content = str(urllib.request.urlopen(url).read())
 	for game in games:
 		game.prev_players = game.curr_players
-		#search_string = "Battleships Pro"
 		search_string = game.search_string
 		index = content.find(search_string)
-		#bships_index = content.find(search_string)
 		game_string = content[index: index + 50]
-		#bships_string = content[bships_index: bships_index + 50]
-		#ingame_index = bships_string.find("/8")
 		ingame_index = game_string.find("/" + str(game.max_players))
 		game.curr_players = int(game_string[ingame_index-1])
-	#return int(bships_string[ingame_index - 1])
 
 
 def start_checking_num_players():
-	refresh_time = 1
-	#old_val = -1
 	games = generate_games()
 	os.system('cls')
 	while True:
 		pull_number(games)
-		#num_players = pull_number()
 		if is_update_needed(games):
 			output_string = ""
 			for game in games:
-				#os.system('cls')
 				if game != games[0]:
 					output_string += "    "
 				output_string += "Current " + game.name + " Players: " + str(game.curr_players)
@@ -56,19 +48,8 @@ def start_checking_num_players():
 					print(output_string)
 					return
 			print(output_string)
-		time.sleep(refresh_time)
+		time.sleep(REFRESH_TIME)
 
-
-		# if num_players != old_val:
-		# 	os.system('cls')
-		# 	print("Current Number of Players: " + str(num_players))
-		# 	old_val = num_players
-		# if num_players >= alert_threshold:
-			
-		# 	winsound.PlaySound('bships_alert.wav', winsound.SND_FILENAME)
-		# 	print("Game starting soon")
-		# 	break
-		# time.sleep(refresh_time)
 
 def generate_games():
 	battleships = Game("Battleships", "Battleships Pro", 8)
@@ -77,6 +58,7 @@ def generate_games():
 	civ_wars = Game("Civilization Wars", "Civilization Wars", 6)
 	return [battleships, jurassic_park, troll_and_elves,civ_wars]
 
+
 def is_update_needed(games):
 	for game in games:
 		if game.prev_players != game.curr_players:
@@ -84,9 +66,4 @@ def is_update_needed(games):
 	return False
 
 start_checking_num_players()
-
-
-
-
-
 
